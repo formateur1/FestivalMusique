@@ -7,6 +7,9 @@
 </head>
 <body>
 
+	<a th:href="formSoliste"><button type="button" class="btn btn-primary">Ajouter Soliste</button></a>
+	
+
 	<table class="table">
 	  <thead>
 	    <tr>
@@ -15,6 +18,7 @@
 	      <th scope="col">Prénom</th>
 	      <th scope="col">Date de naissance</th>
 	      <th scope="col">Nationalité</th>
+	      <th scope="col">Actions</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -24,6 +28,10 @@
 	      <td  th:text="${soliste.prenom}"></td>
 	      <td  th:text="${soliste.dateNaissance}"></td>
 	      <td  th:text="${soliste.nationalite}"></td>
+	      <td>
+	      	<a th:href="'deleteSoliste/' + ${soliste.num}"><button type="button" class="btn btn-primary">Delete</button></a>
+	      	<a th:href="'updateSoliste/' + ${soliste.num}"><button type="button" class="btn btn-primary">Update</button></a>
+	      </td>
 	    </tr>	    
 	  </tbody>
 	</table>

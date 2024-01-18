@@ -4,9 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.inti.model.Soliste;
 import com.inti.service.ISolisteService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 /**
  * @author Hayri ACAR
@@ -29,5 +35,39 @@ public class SolisteController {
 		
 		return "getAllSoliste";
 	}
+	
+	@GetMapping("formSoliste")
+	public String formSoliste() {
+		return "formSoliste";
+	}
+	
+	@PostMapping("saveSoliste")
+	public String saveSoliste(@ModelAttribute("soliste") Soliste soliste)
+	{
+		iss.save(soliste);
+		
+		return "redirect:getAllSoliste";
+	}
+	
+	@GetMapping("deleteSoliste/{num}")
+	public String deleteSoliste(@PathVariable("num") Long num) {
+		iss.delete(num);
+		return "redirect:/soliste/getAllSoliste";
+	}
+	
+	@GetMapping("updateSoliste/{num}")
+	public String updateSoliste(@PathVariable("num") Long num, Model m) {
+		m.addAttribute("soliste", iss.getSoliste(num));
+		return "formUpdateSoliste";
+	}
+	
+	@PostMapping("updateSoliste")
+	public String updateSoliste(@ModelAttribute("solist") Soliste soliste)
+	{
+		iss.save(soliste);
+		
+		return "redirect:getAllSoliste";
+	}
+	
 
 }

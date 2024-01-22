@@ -1,6 +1,7 @@
 package com.inti.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.inti.model.Soliste;
 import com.inti.service.ISolisteService;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -23,15 +27,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = {"soliste", "sol"})
+@Slf4j
 public class SolisteController {
 	
 	@Autowired
 	ISolisteService iss;
 	
 	@GetMapping("getAllSoliste")
+	@Secured({"ROLE_ADMIN"})
 	public String getAllSoliste(Model m)
 	{
 		m.addAttribute("listeSoliste", iss.getAllSoliste());
+		
+		log.info("Affichage de tous les solistes");
 		
 		return "getAllSoliste";
 	}
